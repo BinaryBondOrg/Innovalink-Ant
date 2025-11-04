@@ -16,6 +16,7 @@ export default function Navbar() {
       opacity: 0,
       duration: 1,
       ease: "power2.out",
+      delay: 0.6,
     });
   }, []);
 
