@@ -1,12 +1,23 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import SunButton from "./sunButton";
 import Button from "./button";
 import { useTheme } from "@/utils/ThemeContext";
+import { gsap } from "gsap";
 
 export default function Navbar() {
   const { theme } = useTheme(); // Access the theme from the context
+
+  useEffect(() => {
+    // Animate the navbar sliding down on page load
+    gsap.from("nav", {
+      y: -100,
+      opacity: 0,
+      duration: 1,
+      ease: "power2.out",
+    });
+  }, []);
 
   return (
     <>
@@ -25,7 +36,10 @@ export default function Navbar() {
           />
           <div className="flex gap-5 items-center">
             <SunButton />
-            <Button text="Contact" className=" bg-primary-5 text-foundation-white dark:text-foundation-black dark:bg-neutral-0" />
+            <Button
+              text="Contact"
+              className=" bg-primary-5 text-foundation-white dark:text-foundation-black dark:bg-neutral-0"
+            />
           </div>
         </div>
       </nav>
