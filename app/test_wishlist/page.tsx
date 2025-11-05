@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import WaitlistModal from "@/components/ui/waitlistModal";
 
 export default function WaitlistForm() {
+  const [isWaitlistModalOpened, setIsWaitlistModalOpened] = useState(false);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: string; text: string }>({
@@ -33,6 +35,8 @@ export default function WaitlistForm() {
         setTimeout(() => {
           setMessage({ type: "", text: "" });
         }, 5000);
+
+        setIsWaitlistModalOpened(true);
       } else {
         setMessage({ type: "error", text: data.message });
       }
@@ -97,6 +101,10 @@ export default function WaitlistForm() {
               </svg>
             )}
           </button>
+          <WaitlistModal
+            isOpen={isWaitlistModalOpened}
+            onClose={() => setIsWaitlistModalOpened(false)}
+          />
         </form>
       </div>
     </main>

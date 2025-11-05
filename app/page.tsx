@@ -17,7 +17,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="bg-white dark:bg-black h-screen w-full py-52 ">
+      <div className="bg-white dark:bg-black h-screen w-full flex justify-center items-center ">
         <div className=" mx-auto flex flex-col items-center gap-4 max-w-[583px] justify-center">
           <h3 className="text-primary-6 tracking-[22.2px] text-xl font-light dark:text-neutral-0">
             INOVALINK WEBSITE
