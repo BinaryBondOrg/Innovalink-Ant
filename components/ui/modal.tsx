@@ -97,7 +97,7 @@ const Modal: React.FC<ModalProps> = ({
             {showCloseButton && (
               <button
                 onClick={onClose}
-                className={`${closeClassName} cursor-pointer absolute -top-2.5 -right-2.5 bg-neutral-1 hover:bg-neutral-2 dark:bg-neutral-6 dark:hover:bg-neutral-5 border border-neutral-4 dark:border-neutral-7 p-2  rounded-full transition-colors`}
+                className={`${closeClassName} cursor-pointer absolute -top-2.5 -right-2.5 bg-neutral-1 hover:bg-neutral-2 dark:bg-neutral-6 dark:hover:bg-neutral-5 border border-neutral-2 dark:border-neutral-7 p-2  rounded-full transition-colors`}
                 aria-label="Close Modal"
               >
                 <X className="w-4 h-4 text-neutral-4 dark:text-neutral-0" />
