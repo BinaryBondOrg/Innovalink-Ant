@@ -5,6 +5,7 @@ import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 
 import { ThemeProvider } from "@/utils/ThemeContext";
+import BackgroundVideos from "@/components/BackgroundVideos";
 
 const mona_Sans = Mona_Sans({
   variable: "--font-mono_sans",
@@ -24,6 +25,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+      <meta name="theme-color" content="#ffffff" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -39,8 +43,12 @@ export default function RootLayout({
       </head>
       <body className={`${mona_Sans.className} antialiased`}>
         <ThemeProvider>
+          {/* Background Videos */}
+          <BackgroundVideos />
+
           <Navbar />
           {children}
+          <div id="modal-root"></div>
           <Footer />
         </ThemeProvider>
       </body>
