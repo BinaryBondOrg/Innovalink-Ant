@@ -252,46 +252,46 @@ export default function Home() {
   useEffect(() => {
     let scrollYBeforeFocus = 0;
     let restoringScroll = false;
-  
+
     const handleFocus = () => {
       // Save current scroll position so we can restore it after blur
       scrollYBeforeFocus = window.scrollY;
-  
+
       // Temporarily disable ScrollTrigger updates without unpinning DOM
       ScrollTrigger.config({ ignoreMobileResize: true });
       ScrollTrigger.getAll().forEach((trigger) => {
         trigger.disable(false, false);
       });
-  
+
       // Let the user scroll freely while typing
       document.body.style.overflow = "auto";
     };
-  
+
     const handleBlur = () => {
       // Wait a little for the keyboard to close and viewport to settle
       restoringScroll = true;
       setTimeout(() => {
         // Restore scroll position so the viewport doesn't jump
         window.scrollTo(0, scrollYBeforeFocus);
-  
+
         // Re-enable ScrollTrigger and refresh layout
         ScrollTrigger.getAll().forEach((trigger) => {
           trigger.enable(false, false);
         });
         ScrollTrigger.refresh(true);
-  
+
         // Restore normal scroll control
         document.body.style.overflow = "";
         restoringScroll = false;
       }, 400); // 300–400ms works well for iOS/Android
     };
-  
+
     const inputs = document.querySelectorAll("input, textarea");
     inputs.forEach((input) => {
       input.addEventListener("focus", handleFocus);
       input.addEventListener("blur", handleBlur);
     });
-  
+
     return () => {
       inputs.forEach((input) => {
         input.removeEventListener("focus", handleFocus);
@@ -299,8 +299,6 @@ export default function Home() {
       });
     };
   }, []);
-  
-  
 
   return (
     <div className="sections-container relative h-screen overflow-hidden bg-transparent text-white">
@@ -452,7 +450,6 @@ export default function Home() {
               alt="Decorative Line"
               width={1920}
               height={1080}
-              className="opacity-50"
             />
           </div>
           <div
@@ -460,7 +457,7 @@ export default function Home() {
             style={{ filter: "drop-shadow(0 4px 21.9px rgba(0, 0, 0, 0.15))" }}
           >
             <div className="h-[3px] max-w-[1000px]  mx-4 bg-linear-to-r dark:from-black dark:via-primary-5 dark:to-black from-neutral-1 via-primary-5 to-neutral-1" />
-            <div className="relative w-full max-w-[800px] mx-auto overflow-hidden min-h-60 rounded-[14px]">
+            <div className="relative w-full    min-h-60 rounded-[14px]">
               <video
                 controls
                 ref={videoRef}
@@ -468,37 +465,43 @@ export default function Home() {
                 className="w-full cursor-pointer h-full object-cover"
               />
               {!isPlaying && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Image className="absolute inset-0 z-10 h-full w-full object-cover " src="/videoThumbnail.png" width={1920} height={1080} alt="thumbnail" />
+                <div className="absolute inset-0 w-full h-full flex items-center justify-center">
+                  <Image
+                    className="absolute  h-full w-full object-cover "
+                    src="/videoThumbnail.png"
+                    width={1920}
+                    height={1080}
+                    alt="thumbnail"
+                  />
 
-                <button
-                  onClick={handlePlay}
-                  className="absolute z-20 inset-0 flex items-center justify-center group cursor-pointer"
-                >
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Image
-                      src="/eclipseLg.svg"
-                      alt="Play"
-                      width={82}
-                      height={82}
-                      className="opacity-90 group-hover:scale-110 transition-transform duration-400"
-                    />
-                    <Image
-                      src="/eclipseSm.png"
-                      alt="Play"
-                      width={54}
-                      height={54}
-                      className="opacity-90 absolute group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <Image
-                      src="/play.svg"
-                      alt="Play"
-                      width={16}
-                      height={16}
-                      className="opacity-90 absolute group-hover:scale-110 transition-transform duration-600"
-                    />
-                  </div>
-                </button>
+                  <button
+                    onClick={handlePlay}
+                    className="absolute  inset-0 flex items-center justify-center group cursor-pointer"
+                  >
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Image
+                        src="/eclipseLg.svg"
+                        alt="Play"
+                        width={82}
+                        height={82}
+                        className="opacity-90 group-hover:scale-110 transition-transform duration-400"
+                      />
+                      <Image
+                        src="/eclipseSm.png"
+                        alt="Play"
+                        width={54}
+                        height={54}
+                        className="opacity-90 absolute group-hover:scale-110 transition-transform duration-500"
+                      />
+                      <Image
+                        src="/play.svg"
+                        alt="Play"
+                        width={16}
+                        height={16}
+                        className="opacity-90 absolute group-hover:scale-110 transition-transform duration-600"
+                      />
+                    </div>
+                  </button>
                 </div>
               )}
             </div>
