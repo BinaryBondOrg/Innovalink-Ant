@@ -35,21 +35,20 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
   const [loading, setLoading] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [dragActive, setDragActive] = useState(false);
-  const errorRef = useRef<HTMLDiveElement | null>(null)
+  const divErrorRef = useRef<HTMLDivElement | null>(null);
+  const inputErrorRef = useRef<HTMLInputElement | null>(null);
+  const textAreaErrorRef = useRef<HTMLTextAreaElement | null>(null);
+
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>(
     {}
   );
 
   const handleClickOutside = (event: MouseEvent) => {
-        const target = event.target as Node;
-        if (
-          errorRef.current &&
-          !errorRef.current.contains(target)
-        ) {
-          setFieldErrors({});
-        }
-      };
-
+    const target = event.target as Node;
+    if (inputErrorRef.current && !inputErrorRef.current.contains(target)) {
+      setFieldErrors({});
+    }
+  };
 
   // Motion values for drag-to-close on mobile
   const y = useMotionValue(0);
@@ -85,12 +84,12 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
       }, 300);
       return () => {
         clearTimeout(timer);
-      }
+      };
     }
     document.addEventListener("mousedown", handleClickOutside);
-    return(() => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      })
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, [isOpen]);
 
   const simulateProgress = (file: File) => {
@@ -377,7 +376,8 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
                 placeholder="Full name *"
                 error={fieldErrors.fullName}
                 disabled={loading}
-                ref={errorRef}
+                ref={inputErrorRef}
+                // ref={errorRef}
               />
 
               <FormInput
@@ -388,7 +388,9 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
                 placeholder="Email *"
                 error={fieldErrors.email}
                 disabled={loading}
-                ref={errorRef}
+                ref={inputErrorRef}
+
+                // ref={errorRef}
               />
             </div>
 
@@ -401,7 +403,9 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
               placeholder="Subject *"
               error={fieldErrors.subject}
               disabled={loading}
-              ref={errorRef}
+              ref={inputErrorRef}
+
+              // ref={errorRef}
             />
 
             {/* Project Details - Textarea */}
@@ -414,7 +418,9 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
               error={fieldErrors.projectDetails}
               disabled={loading}
               rows={5}
-              ref={errorRef}
+              ref={inputErrorRef}
+
+              // ref={errorRef}
             />
 
             {/* File Upload */}

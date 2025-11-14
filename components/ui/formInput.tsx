@@ -11,7 +11,7 @@ interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement | HT
   type?: string;
   as?: "input" | "textarea";
   rows?: number;
-  ref?: string;
+  ref?: React.Ref<HTMLDivElement>;
 }
 
 const FormInput: React.FC<FormInputProps> = ({
