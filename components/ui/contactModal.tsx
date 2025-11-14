@@ -7,7 +7,7 @@ import { getCalApi } from "@calcom/embed-react";
 import { useMotionValue, useTransform } from "framer-motion";
 import Link from "next/link";
 import { showToast } from "./toast";
-import FormInput from "@/components/ui/FormInput";
+import FormInput from "@/components/ui/formInput";
 
 interface ContactModalProps {
   isOpen: boolean;
