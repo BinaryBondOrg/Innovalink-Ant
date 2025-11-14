@@ -15,14 +15,14 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed bg-transparent px-4 w-full z-10 top-0">
+      <nav className="fixed bg-transparent p-5 sm:p-7 md:p-8 w-full z-10 top-0 max-w-[1300px] place-self-center">
         <div className="flex w-full max-w-7xl place-self-center justify-between">
           <img
-            className="w-24 h-24"
+            className="w-[39px] h-[42px]"
             src={
               theme === "dark"
-                ? "/INOVALINK_LOGO_ON_WHITE.png"
-                : "/INOVALINK_LOGO_ON_BLACK.png"
+                ? "/img/INOVALINK_LOGO_ON_BLACK.png"
+                : "/img/INOVALINK_LOGO_ON_WHITE.png"
             }
             alt="Logo"
             width="1920"
@@ -33,7 +33,7 @@ export default function Navbar() {
             <Button
               onClick={() => setIsContactModalOpened(true)}
               text="Contact"
-              className=" bg-primary-5 hover:bg-primary-6 focus:bg-primary-4.1 text-foundation-white  dark:text-foundation-black dark:bg-neutral-0 dark:hover:bg-neutral-2 dark:focus:bg-neutral-2"
+              className=" font-normal bg-primary-5 hover:bg-primary-6 focus:bg-primary-4.1 text-foundation-white  dark:text-foundation-black dark:bg-neutral-0 dark:hover:bg-neutral-2 dark:focus:bg-neutral-2"
             />
             
           </div>

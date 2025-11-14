@@ -18,9 +18,9 @@ export default function footer() {
   return (
     <>
       {/* <nav className="fixed bg-transparent px-4 w-full top-0"></nav> */}
-      <footer className="footer fixed bg-transparent px-4 w-full block bottom-[54px]">
-        <div className="  w-full max-w-7xl place-self-center items-center flex justify-between">
-          <div className="flex flex-row gap-1 pl-8 items-center dark:text-neutral-0 text-neutral-5">
+      <footer className="footer fixed bg-transparent max-w-[1300px] place-self-center px-5 sm:px-7 md:px-8 w-full block bottom-10 md:bottom-[60px]">
+        <div className="  w-full max-w-7xl place-self-center items-end md:items-center flex justify-between">
+          <div className="flex flex-row gap-1 items-center dark:text-neutral-0 text-neutral-5">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="14"
@@ -36,8 +36,8 @@ export default function footer() {
             <p className="dark:text-neutral-0 text-neutral-5  ">2025</p>
             <div className="w-[48.5px] dark:bg-primary-0 h-[0.5px] bg-neutral-5 animate-pulse transition  " />
           </div>
-          <div className="flex flex-col md:flex-row gap-2  pr-8 ">
-            <Link  href="mailto:inovalink.net.tech@gmail.com">
+          <div className="flex flex-col md:flex-row gap-2">
+            <Link href="mailto:inovalink.net.tech@gmail.com">
               <div className="w-7  h-7 items-center flex justify-center cursor-pointer group hover:bg-neutral-4 hover:scale-125 hover:border-neutral-4 transition-all duration-300 rounded-full border border-neutral-7 bg-neutral-7">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,10 @@ export default function footer() {
                 </svg>
               </div>
             </Link>
-            <Link target="_blank" href="https://www.linkedin.com/posts/inovalink-solution_inovalink-solution-linkedin-activity-7393027418736807937-p7F5?utm_source=share&utm_medium=member_ios&rcm=ACoAADgBfCYB9dPnS2rkSe1TxtxnFBc6FH4rlgg">
+            <Link
+              target="_blank"
+              href="https://www.linkedin.com/posts/inovalink-solution_inovalink-solution-linkedin-activity-7393027418736807937-p7F5?utm_source=share&utm_medium=member_ios&rcm=ACoAADgBfCYB9dPnS2rkSe1TxtxnFBc6FH4rlgg"
+            >
               <div className="w-7  h-7 items-center flex justify-center cursor-pointer group hover:bg-neutral-4 hover:scale-125 hover:border-neutral-4 transition-all duration-300 rounded-full border border-neutral-7 bg-neutral-7">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +74,6 @@ export default function footer() {
                 </svg>
               </div>
             </Link>
-           
           </div>
         </div>
       </footer>

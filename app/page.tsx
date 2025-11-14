@@ -21,6 +21,7 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [fieldError, setFieldError] = useState("");
+  const errorRef = useRef<HTMLDivElement | null>(null);
 
     const dummyImages = [
     "https://i.pinimg.com/1200x/b9/af/d2/b9afd2925b48ae6891138f8b4de78413.jpg",
@@ -29,6 +30,16 @@ export default function Home() {
     "https://i.pinimg.com/736x/2d/11/01/2d1101af52ac9ef6a7be4cd0acf5fdf3.jpg",
     "https://i.pinimg.com/736x/5f/d4/bb/5fd4bbf49dbf74fe45c019567f348a0b.jpg",
   ];
+
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+      if (
+        errorRef.current &&
+        !errorRef.current.contains(target)
+      ) {
+        setFieldError("");
+      }
+    };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,7 +66,6 @@ export default function Home() {
     const data = await response.json();
 
     if (data.success) {
-      showToast(data.message || "Successfully joined the waitlist!", "success");
       setEmail("");
       setIsWaitlistModalOpened(true);
     } else {
@@ -66,6 +76,9 @@ export default function Home() {
         data.message.includes("Email already registered")
       ) {
         setFieldError(data.message);
+        setTimeout(() => {
+          setFieldError("")
+        },  10000)
       } else {
         // Other errors - show as toast
         showToast(data.message, "error");
@@ -106,12 +119,14 @@ export default function Home() {
     const togglePlayButton = () => setIsPlaying(!video.paused);
     video.addEventListener("play", togglePlayButton);
     video.addEventListener("pause", togglePlayButton);
+    document.addEventListener("mousedown", handleClickOutside)
 
     return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
       video.removeEventListener("play", togglePlayButton);
       video.removeEventListener("pause", togglePlayButton);
     };
-  }, []);
+  }, [handleClickOutside]);
 
   // Main scroll + animation logic
   useEffect(() => {
@@ -389,7 +404,7 @@ export default function Home() {
                     C
                   </span>
                   <div
-                    className="md:w-[50px] md:h-[50px] lg:w-[68px] lg:h-[68px] w-5 h-5 sm:w-8 sm:h-8 place-self-center rotate-45 mx-1 sm:mx-2 md:mx-4 "
+                    className="md:w-[50px] md:h-[50px] lg:w-[68px] lg:h-[68px] w-4 h-4 sm:w-8 sm:h-8 place-self-center rotate-45 mx-1 sm:mx-2 md:mx-4 "
                     style={{
                       background:
                         "linear-gradient(257deg, #09C00E 47.19%, #045A07 109.91%)",
@@ -424,7 +439,7 @@ export default function Home() {
               onSubmit={handleSubmit}
               className="flex flex-col items-center md:items-start md:flex-row gap-2.5 md:gap-[5px] w-full max-w-[400px] md:max-w-[480px] lg:max-w-[583px]"
             >
-              <div className="relative flex flex-col items-center md:items-start justify-start space-y-1 md:flex-1 w-full">
+              <div  ref={errorRef} className="relative flex flex-col items-start justify-start space-y-1 md:flex-1 w-full">
                 <input
                   type="text"
                   name="email"
@@ -442,14 +457,14 @@ export default function Home() {
                   }`}
                 />
                 {fieldError && (
-                  <>
+                  <div >
                   <p className="mt-1.5 text-sm px-2 text-error-5">
                     {fieldError}
                   </p>
                 <div className="absolute top-3 right-3">
                   <CircleAlert className="w-5 h-5 text-error-4" />
                 </div>
-                </>
+                </div>
                 )}
               </div>
               <IconButton
@@ -476,7 +491,7 @@ export default function Home() {
                 ))}
               </div>
               {/* Count message */}
-              <p className="mt-1 text-gray-400 text-sm text-center">
+              <p className="mt-1 text-neutral-4 text-sm text-center dark:text-neutral-0">
                 <span className="text-green-500 font-semibold">100+</span>{" "}
                 people have joined!
               </p>
@@ -537,13 +552,13 @@ export default function Home() {
           </div>
 
           {/* Line SVG behind the video */}
-          <div className="absolute inset-0 flex items-center justify-center z-0">
+          <div className="absolute inset-0 scale-250 -mt-24 md:-mt-16 md:scale-120 lg:mt-10  flex items-center justify-center z-0">
             <Image
-              src="/greenLine.svg"
+              src="/svg/green-line.svg"
               alt="Decorative Line"
               width={1920}
               height={1080}
-              className="greenline"
+              className="greenline w-[1920px] h-[1080px] object-contain md:object-cover lg:object-contain "
             />
           </div>
           <div
