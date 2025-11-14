@@ -9,7 +9,6 @@ import Link from "next/link";
 import { showToast } from "./toast";
 import FormInput from "@/components/ui/FormInput";
 
-
 interface ContactModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -36,7 +35,9 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
   const [loading, setLoading] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [dragActive, setDragActive] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({});
+  const [uploadProgress, setUploadProgress] = useState<Record<string, number>>(
+    {}
+  );
 
   // Motion values for drag-to-close on mobile
   const y = useMotionValue(0);
@@ -232,8 +233,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
           errorMessage.includes("connection")
         ) {
           showToast(errorMessage, "error");
-        }
-        else if (
+        } else if (
           errorMessage.includes("email") &&
           errorMessage.includes("valid")
         ) {
@@ -362,55 +362,49 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
             {/* Full Name and Email Row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormInput
-      type="text"
-      name="fullName"
-      value={formData.fullName}
-      onChange={handleChange}
-      placeholder="Full name *"
-      error={fieldErrors.fullName}
-      disabled={loading}
-      
-    />
+                type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                placeholder="Full name *"
+                error={fieldErrors.fullName}
+                disabled={loading}
+              />
 
-    <FormInput
-      type="text"
-      name="email"
-      value={formData.email}
-      onChange={handleChange}
-      placeholder="Email *"
-      error={fieldErrors.email}
-      disabled={loading}
-      
-    />
-
-            
+              <FormInput
+                type="text"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Email *"
+                error={fieldErrors.email}
+                disabled={loading}
+              />
             </div>
 
             {/* Subject */}
-             <FormInput
-    type="text"
-    name="subject"
-    value={formData.subject}
-    onChange={handleChange}
-    placeholder="Subject *"
-    error={fieldErrors.subject}
-    disabled={loading}
-    required
-  />
-       
-{/* Project Details - Textarea */}
-  <FormInput
-    as="textarea"
-    name="projectDetails"
-    value={formData.projectDetails}
-    onChange={handleChange}
-    placeholder="Project details *"
-    error={fieldErrors.projectDetails}
-    disabled={loading}
-    rows={5}
-    required
-  />
-        
+            <FormInput
+              type="text"
+              name="subject"
+              value={formData.subject}
+              onChange={handleChange}
+              placeholder="Subject *"
+              error={fieldErrors.subject}
+              disabled={loading}
+            />
+
+            {/* Project Details - Textarea */}
+            <FormInput
+              as="textarea"
+              name="projectDetails"
+              value={formData.projectDetails}
+              onChange={handleChange}
+              placeholder="Project details *"
+              error={fieldErrors.projectDetails}
+              disabled={loading}
+              rows={5}
+            />
+
             {/* File Upload */}
             <div>
               <label className="block text-[15px] lg:text-base mb-3 md:mb-4 text-neutral-5 dark:text-neutral-0 font-medium">
@@ -476,7 +470,10 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
                         uploadProgress[file.name] < 100 ? (
                           <div className="flex flex-col gap-1 items-start">
                             <p className="text-[11px] text-neutral-4 dark:text-neutral-0">
-                              {((uploadProgress[file.name] / 100) * (file.size / 1024 / 1024)).toFixed(1)}
+                              {(
+                                (uploadProgress[file.name] / 100) *
+                                (file.size / 1024 / 1024)
+                              ).toFixed(1)}
                               MB / {(file.size / 1024 / 1024).toFixed(1)}MB
                             </p>
                             <div className="w-full bg-neutral-2 dark:bg-neutral-1 h-2 rounded-full mt-1">
@@ -496,7 +493,9 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
                       </div>
                       <button
                         type="button"
-                        onClick={() => setFiles((prev) => prev.filter((_, i) => i !== index))}
+                        onClick={() =>
+                          setFiles((prev) => prev.filter((_, i) => i !== index))
+                        }
                         className="cursor-pointer absolute -top-2.5 -right-2.5 border dark:border-none border-neutral-2 bg-neutral-1 dark:bg-neutral-6 hover:bg-neutral-2 dark:hover:bg-neutral-7 p-1 rounded-full transition-all duration-300"
                         aria-label="Remove file upload"
                       >
@@ -552,7 +551,10 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
         </div>
       </div>
 
-      <SuccessContactModal isOpen={isSuccessModal} onClose={() => setIsSuccessModal(false)} />
+      <SuccessContactModal
+        isOpen={isSuccessModal}
+        onClose={() => setIsSuccessModal(false)}
+      />
     </Modal>
   );
 };

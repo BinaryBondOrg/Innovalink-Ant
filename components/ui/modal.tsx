@@ -155,7 +155,7 @@ const Modal: React.FC<ModalProps> = ({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className={`min-w-[320px] fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden ${bgClassName}`}
+          className={`min-w-[320px] fixed inset-0 z-[9997] flex items-center justify-center overflow-hidden ${bgClassName}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
