@@ -2,12 +2,13 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import IconButton from "../components/button+icon";
 import ArrowUpRight from "../components/arrow-up-right.svg";
 import Image from "next/image";
 import WaitlistModal from "@/components/ui/waitlistModal";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -129,7 +130,7 @@ export default function Home() {
     gsap.to(".rotate-45", {
       rotation: "+=360",
       repeat: -1,
-      duration: 6,
+      duration: 12,
       ease: "linear",
     });
 
@@ -205,6 +206,16 @@ export default function Home() {
             "-=0.3"
           )
           .from(
+            ".greenline",
+            {
+              y: 50,
+              opacity: 0,
+              duration: 0.5,
+              ease: "power2.out",
+            },
+            "-=0.1"
+          )
+          .from(
             ".video",
             {
               y: 50,
@@ -252,46 +263,46 @@ export default function Home() {
   useEffect(() => {
     let scrollYBeforeFocus = 0;
     let restoringScroll = false;
-  
+
     const handleFocus = () => {
       // Save current scroll position so we can restore it after blur
       scrollYBeforeFocus = window.scrollY;
-  
+
       // Temporarily disable ScrollTrigger updates without unpinning DOM
       ScrollTrigger.config({ ignoreMobileResize: true });
       ScrollTrigger.getAll().forEach((trigger) => {
         trigger.disable(false, false);
       });
-  
+
       // Let the user scroll freely while typing
       document.body.style.overflow = "auto";
     };
-  
+
     const handleBlur = () => {
       // Wait a little for the keyboard to close and viewport to settle
       restoringScroll = true;
       setTimeout(() => {
         // Restore scroll position so the viewport doesn't jump
         window.scrollTo(0, scrollYBeforeFocus);
-  
+
         // Re-enable ScrollTrigger and refresh layout
         ScrollTrigger.getAll().forEach((trigger) => {
           trigger.enable(false, false);
         });
         ScrollTrigger.refresh(true);
-  
+
         // Restore normal scroll control
         document.body.style.overflow = "";
         restoringScroll = false;
       }, 400); // 300–400ms works well for iOS/Android
     };
-  
+
     const inputs = document.querySelectorAll("input, textarea");
     inputs.forEach((input) => {
       input.addEventListener("focus", handleFocus);
       input.addEventListener("blur", handleBlur);
     });
-  
+
     return () => {
       inputs.forEach((input) => {
         input.removeEventListener("focus", handleFocus);
@@ -299,11 +310,25 @@ export default function Home() {
       });
     };
   }, []);
-  
-  
+
+  const scrollToWhoWeAre = () => {
+    gsap.to(window, {
+      duration: 1.5,
+      scrollTo: {
+        y: 600, // This should match your ScrollTrigger end value
+        autoKill: false,
+      },
+      ease: "power2.inOut",
+    });
+  };
 
   return (
-    <div className="sections-container relative h-screen overflow-hidden bg-transparent text-white">
+    <div
+      className={`sections-container relative h-screen overflow-hidden bg-transparent text-white ${
+        isWaitlistModalOpened ? "no-pointer-events" : ""
+      }`}
+    >
+      {" "}
       {/* HERO SECTION */}
       <section
         className="hero-section absolute inset-0 flex flex-col items-center pt-36"
@@ -312,48 +337,48 @@ export default function Home() {
           pointerEvents: whoWeAreVisible ? "none" : "auto",
         }}
       >
-        <div className="mx-auto flex flex-col px-[15px] md:px-0 items-center gap-4 max-w-[583px] justify-center">
-          <div>
-            <h3 className="text-primary-6 tracking-[11px] text-center  md:tracking-[22.2px] w-full text-[11px] md:text-xl font-light dark:text-neutral-0 hero-heading">
-              INOVALINK WEBSITE
-            </h3>
-            <h1 className="dark:text-neutral-0 text-neutral-6 items-center flex flex-col text-[40px] md:text-9xl font-bold coming-soon">
-              <span className="flex">
-                <span>C</span>
+        <div className="mx-auto flex flex-col px-[15px] md:px-0 items-center gap-4 max-w-[583px] w-full justify-center">
+          <div className="w-full flex flex-col ">
+            <div className="w-full flex flex-col  items-center">
+              <h3 className="text-primary-6 tracking-[11px] leading-[15px] text-center w-fit -mr-[11px] md:-mr-[22.2px]   md:tracking-[22.2px]  text-[11px] md:text-xl font-light dark:text-neutral-0 hero-heading">
+                INOVALINK WEBSITE
+              </h3>
+            </div>
+            <h1 className="dark:text-neutral-0 text-neutral-6 w-full items-center flex flex-col text-[40px] md:text-9xl font-bold coming-soon">
+              <span className="flex leading-[92.188%] ">
+                <span className="dark:bg-clip-text dark:text-transparent dark:bg-linear-to-b from-white via-white via-75% to-[#999]">
+                  C
+                </span>
                 <div
-                  className="md:w-[68px] w-5 h-5 place-self-center rotate-45 mx-1 md:mx-5 md:h-[68px]"
+                  className="md:w-[68px] w-5 h-5 place-self-center rotate-45 mx-1 md:mx-4 md:h-[68px]"
                   style={{
                     background:
                       "linear-gradient(257deg, #09C00E 47.19%, #045A07 109.91%)",
                   }}
                 ></div>
-                <span>MING</span>
-                <span className="md:hidden ml-2">SOON</span>
+                <span className="dark:bg-clip-text dark:text-transparent dark:bg-linear-to-b from-white via-white via-75% to-[#999]">
+                  MING
+                </span>
+                <span className="md:hidden ml-2 dark:bg-clip-text dark:text-transparent dark:bg-linear-to-b from-white via-white via-75% to-black">
+                  SOON
+                </span>
               </span>
-              <span className="hidden md:block">SOON</span>
+              <span className="hidden md:block dark:bg-clip-text dark:text-transparent dark:bg-linear-to-b from-white via-white via-70% to-black">
+                SOON
+              </span>
             </h1>
 
-            <p className="dark:text-neutral-4 text-neutral-6 text-[14px] text-center hero-paragraph">
-              <span className="text-primary-5 font-bold">
-                The wait won't be long.
-              </span>{" "}
-              We're creating something with heart, a space where innovation
-              meets purpose. From software solutions that drive seamless
-              business growth, to motion and graphic designs that boost
-              engagement and attract clients, to brand development that captures
-              the essence of who you are. Everything we create is designed to
-              move your business forward. We design. We code. We create. We
-              build what inspires businesses, empowers communities, and shapes
-              cultures, ideas that spark connection, fuel growth, and leave a
-              lasting impact. Something bold, beautiful, and transformative is
-              on the horizon.{" "}
-              <span className="text-primary-5 font-bold">Stay close.</span>
+            <p className="dark:text-neutral-4 text-neutral-6 text-[14px] leading-4 max-w-[374px] mx-auto text-center hero-paragraph">
+              Our story begins soon. Innovative Software Solutions, Motion
+              Designs, Product Designs, Brand Development? We build what
+              inspires us. Something bold and different is on the horizon.{" "}
+              <span className="text-primary-5 italic">Stay Tuned!</span>
             </p>
           </div>
-          <div className="pt-2.5 hero-input-group space-y-1 w-full">
+          <div className="pt-2.5 hero-input-group space-y-1 h-12 max-w-[486px] w-full">
             <form
               onSubmit={handleSubmit}
-              className=" flex flex-col md:flex-row gap-2.5 md:gap-1 "
+              className="flex flex-col md:flex-row gap-2.5 w-full md:gap-1"
             >
               <input
                 type="email"
@@ -363,7 +388,7 @@ export default function Home() {
                 placeholder="Enter your email"
                 required
                 disabled={loading}
-                className={`border rounded-[42px] py-2.5 px-5 placeholder:text-sm placeholder:text-neutral-4 text-neutral-4 dark:text-neutral-2 flex-1   ${
+                className={`border rounded-[42px] py-2.5 flex-1 px-5 bg-neutral-0 dark:bg-neutral-7/30 placeholder:text-sm placeholder:text-neutral-4 text-neutral-4 dark:text-neutral-2    ${
                   message.type === "error"
                     ? "border-error-5"
                     : "dark:border-neutral-5 border-neutral-4 "
@@ -394,19 +419,21 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* SCROLL INDICATOR */}
       <div
-        className="max-w-[81px] flex flex-col items-center text-center gap-1.5 bottom-10 md:bottom-[60px] absolute left-1/2 transform -translate-x-1/2 scroll-to-view-more"
+        className="max-w-[81px] flex flex-col items-center text-center gap-1.5 bottom-10 md:bottom-[60px] absolute left-1/2 transform -translate-x-1/2 scroll-to-view-more "
         style={{
           zIndex: whoWeAreVisible ? 0 : 20,
           pointerEvents: whoWeAreVisible ? "none" : "auto",
         }}
       >
-        <h3 className="dark:text-neutral-0 text-neutral-0 hero-text-arrow">
+        <h3 className="dark:text-neutral-0 leading-tight text-neutral-0 hero-text-arrow">
           Scroll to view more
         </h3>
-        <div className="w-6 h-12 bg-neutral-7 rounded-[37px] items-center hero-text-arrow flex justify-center">
+        <button
+          onClick={scrollToWhoWeAre}
+          className="w-6 h-12 cursor-pointer bg-neutral-7 rounded-[37px] items-center hero-text-arrow flex justify-center hover:bg-neutral-6 transition-colors duration-200"
+        >
           <Image
             className="w-[11.4px] h-[20.3px]"
             src="/arrowdown.svg"
@@ -414,9 +441,8 @@ export default function Home() {
             height="1080"
             alt="down"
           />
-        </div>
+        </button>
       </div>
-
       {/* WHO WE ARE SECTION */}
       <section
         className="who-we-are-section absolute inset-0 flex flex-col pt-36 px-[15px] text-black opacity-0 scale-75"
@@ -429,7 +455,7 @@ export default function Home() {
         <div className="flex flex-col gap-[37px] md:gap-16  h-fit">
           <div className="text-center flex flex-col gap-2.5 mx-auto max-w-[793px]">
             <div className="max-w-[574px] mx-auto">
-              <h1 className="dark:text-neutral-0 text-neutral-6 text-2xl md:text-[40px] font-bold">
+              <h1 className="dark:text-transparent dark:bg-clip-text dark:bg-linear-to-r from-0% from-black/84 via-white  to-black/84 text-neutral-6 text-2xl md:text-[40px] font-bold">
                 Who We Are
               </h1>
               <p className="dark:text-neutral-4 text-neutral-5 text-[14px]">
@@ -452,15 +478,15 @@ export default function Home() {
               alt="Decorative Line"
               width={1920}
               height={1080}
-              className="opacity-100"
+              className="greenline"
             />
           </div>
           <div
-            className="max-w-[793px] video mx-auto"
+            className="max-w-[793px] video mx-auto "
             style={{ filter: "drop-shadow(0 4px 21.9px rgba(0, 0, 0, 0.15))" }}
           >
-            <div className="h-[3px] max-w-[1000px]  mx-4 bg-linear-to-r dark:from-black dark:via-primary-5 dark:to-black from-neutral-1 via-primary-5 to-neutral-1" />
-            <div className="relative w-full max-w-[800px] mx-auto overflow-hidden min-h-60 rounded-[14px]">
+            <div className="h-[3px]  mx-4   bg-linear-to-r dark:from-black/30 dark:via-primary-5 dark:to-black/30 from-neutral-1/30 via-primary-5 to-neutral-1/30" />
+            <div className="relative w-full  rounded-[14px] overflow-hidden ">
               <video
                 controls
                 ref={videoRef}
@@ -468,44 +494,49 @@ export default function Home() {
                 className="w-full cursor-pointer h-full object-cover"
               />
               {!isPlaying && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Image className="absolute inset-0 z-10 h-full w-full object-cover " src="/videoThumbnail.png" width={1920} height={1080} alt="thumbnail" />
+                <div className="absolute inset-0 w-full h-full flex items-center justify-center ">
+                  <Image
+                    className="absolute inset-0 scale-110 w-full h-full object-cover"
+                    src="/videoThumbnail.png"
+                    width={1920}
+                    height={1080}
+                    alt="thumbnail"
+                  />
 
-                <button
-                  onClick={handlePlay}
-                  className="absolute z-20 inset-0 flex items-center justify-center group cursor-pointer"
-                >
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Image
-                      src="/eclipseLg.svg"
-                      alt="Play"
-                      width={82}
-                      height={82}
-                      className="opacity-90 group-hover:scale-110 transition-transform duration-400"
-                    />
-                    <Image
-                      src="/eclipseSm.png"
-                      alt="Play"
-                      width={54}
-                      height={54}
-                      className="opacity-90 absolute group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <Image
-                      src="/play.svg"
-                      alt="Play"
-                      width={16}
-                      height={16}
-                      className="opacity-90 absolute group-hover:scale-110 transition-transform duration-600"
-                    />
-                  </div>
-                </button>
+                  <button
+                    onClick={handlePlay}
+                    className="absolute inset-0 flex items-center justify-center group cursor-pointer"
+                  >
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Image
+                        src="/eclipseLg.svg"
+                        alt="Play"
+                        width={82}
+                        height={82}
+                        className="opacity-90 group-hover:scale-110 transition-transform duration-400"
+                      />
+                      <Image
+                        src="/eclipseSm.png"
+                        alt="Play"
+                        width={54}
+                        height={54}
+                        className="opacity-90 absolute group-hover:scale-110 transition-transform duration-500"
+                      />
+                      <Image
+                        src="/play.svg"
+                        alt="Play"
+                        width={16}
+                        height={16}
+                        className="opacity-90 absolute group-hover:scale-110 transition-transform duration-600"
+                      />
+                    </div>
+                  </button>
                 </div>
               )}
             </div>
           </div>
         </div>
       </section>
-
       <WaitlistModal
         isOpen={isWaitlistModalOpened}
         onClose={() => setIsWaitlistModalOpened(false)}
