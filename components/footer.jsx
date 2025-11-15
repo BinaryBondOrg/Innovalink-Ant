@@ -5,16 +5,16 @@ import Link from "next/link";
 import { useEffect } from "react";
 
 export default function footer() {
-  useEffect(() => {
-    // Animate the navbar sliding down on page load
-    gsap.from("footer", {
-      y: 100,
-      opacity: 0,
-      duration: 1,
-      ease: "power2.out",
-      delay: 0.6,
-    });
-  }, []);
+  // useEffect(() => {
+  //   // Animate the navbar sliding down on page load
+  //   gsap.from("footer", {
+  //     y: 100,
+  //     opacity: 0,
+  //     duration: 1,
+  //     ease: "power2.out",
+  //     delay: 0.6,
+  //   });
+  // }, []);
   return (
     <>
       {/* <nav className="fixed bg-transparent px-4 w-full top-0"></nav> */}
