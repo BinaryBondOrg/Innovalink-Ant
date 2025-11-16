@@ -270,7 +270,7 @@ export default function Home() {
 
   return (
     <div
-      className={`sections-container relative h-screen overflow-hidden bg-transparent text-white ${
+      className={`sections-container relative h-dvh  overflow-hidden! bg-transparent text-white ${
         isWaitlistModalOpened ? "no-pointer-events" : ""
       }`}
     >
