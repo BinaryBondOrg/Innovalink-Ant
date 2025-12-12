@@ -165,9 +165,9 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         {/* Favicons */}
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" type="image/png" href="/inovalinkIcon.png" sizes="32x32" />
-        <link rel="apple-touch-icon" href="/inovalinkIcon.png" />
+        <link rel="icon" href="/favicon.ico" sizes="48x48"/>
+        <link rel="icon" type="image/png" href="/inovalinkIcon.png" sizes="48x48" />
+        <link rel="apple-touch-icon" href="/inovalinkIcon.png" sizes="180x180"/>
      
           {/* 🔵 LinkedIn / Google Schema */}
           <script
