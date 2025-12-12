@@ -164,6 +164,11 @@ export default function RootLayout({
         <meta name="theme-color" content="#ffffff" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        {/* Favicons */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" type="image/png" href="/inovalinkIcon.png" sizes="32x32" />
+        <link rel="apple-touch-icon" href="/inovalinkIcon.png" />
+     
           {/* 🔵 LinkedIn / Google Schema */}
           <script
           type="application/ld+json"
